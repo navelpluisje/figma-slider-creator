@@ -1,10 +1,10 @@
 import { createParentFrame } from "utils/createParentFrame";
-import { createRotary } from "utils/createRotary";
-import { hasRotatingNodes } from "utils/hasRotate";
+import { createSlider } from "utils/createSlider";
+import { hasCapNodes } from "utils/hasSlider";
 
 // Close the plugin when there is no selection
 if (!figma.currentPage.selection.length) {
-  figma.notify('Create Knob needs a selection. Select a frame to create your knob from.');
+  figma.notify('Create Slider needs a selection. Select a frame to create your slider from.');
   figma.notify('Or check the documentation.');
   figma.closePlugin();
 }
@@ -13,14 +13,14 @@ if (!figma.currentPage.selection.length) {
 figma.showUI(__html__, {
   width: 450,
   height: 350,
-  title: 'Create a knob',
+  title: 'Create a slider',
 })
 
 figma.ui.onmessage = (message) => {
-  // If the Node to create the knob from is a Group, we put it in a Frame first
+  // If the Node to create the slider from is a Group, we put it in a Frame first
   if (
     figma.currentPage.selection[0].type === 'GROUP'
-    && hasRotatingNodes(figma.currentPage.selection[0].children)
+    && hasCapNodes(figma.currentPage.selection[0].children)
   ) {
     createParentFrame()
   }
@@ -37,13 +37,12 @@ figma.ui.onmessage = (message) => {
   if (
     figma.currentPage.selection[0].type === 'FRAME'
     && figma.currentPage.selection[0].children[0].type === 'GROUP'
-    && hasRotatingNodes(figma.currentPage.selection[0].children[0].children)
+    && hasCapNodes(figma.currentPage.selection[0].children[0].children)
   ) {
-    console.log({ message })
-    createRotary(
+    createSlider(
       parseInt(message['nb-steps'], 10),
-      parseInt(message['nb-degrees'], 10),
       message['frame-name'] || 'step',
+      message['slider-direction'] || 'ttb',
       message['step-direction'] || 'vertical',
     );
   } else {

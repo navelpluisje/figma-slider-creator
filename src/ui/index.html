@@ -321,6 +321,11 @@
                 user-select: none;
                 padding: 0 calc(var(--size-xxsmall) / 2) 0 var(--size-xxsmall);
             }
+
+            .two-columns {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
         </style>
     </head>
 
@@ -332,26 +337,49 @@
                     placeholder="Give the number of steps">
             </div>
             <div>
-                <label for="nb-degrees" class="label">Number of degrees</label>
-                <input type="number" name="nb-degrees" id="nb-degrees" class="input__field"
-                    placeholder="The number of degrees the rotation spans">
-            </div>
-            <div>
                 <label for="frame-name" class="label">Name for the step frames</label>
                 <input type="text" name="frame-name" id="frame-name" class="input__field"
                     placeholder="The name given to the frame for every step">
             </div>
-            <div class="section-title">Steps direction</div>
-            <div class="radio">
-                <input type="radio" name="step-direction" id="step-direction-vertical" class="radio__button"
-                    value="vertical">
-                <label for="step-direction-vertical" class="radio__label">Vertical</label>
-            </div>
-            <div class="radio">
-                <input type="radio" name="step-direction" id="step-direction-horizontal" class="radio__button"
-                    value="horizontal">
-                <label for="step-direction-horizontal" class="radio__label">Horizontal</label>
-            </div>
+            <section class="two-columns">
+                <div class="left">
+                    <div class="section-title">Slider direction</div>
+                    <div class="radio">
+                        <input type="radio" name="slider-direction" id="slider-direction-ttb" class="radio__button"
+                            value="ttb">
+                        <label for="slider-direction-ttb" class="radio__label">Top to bottom</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="slider-direction" id="slider-direction-btt" class="radio__button"
+                            value="btt">
+                        <label for="slider-direction-btt" class="radio__label">Bottom to top</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="slider-direction" id="slider-direction-ltr" class="radio__button"
+                            value="ltr">
+                        <label for="slider-direction-ltr" class="radio__label">Left to right</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="slider-direction" id="slider-direction-rtl" class="radio__button"
+                            value="rtl">
+                        <label for="slider-direction-rtl" class="radio__label">Right to left</label>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="section-title">Steps direction</div>
+                    <div class="radio">
+                        <input type="radio" name="step-direction" id="step-direction-vertical" class="radio__button"
+                            value="vertical">
+                        <label for="step-direction-vertical" class="radio__label">Vertical</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="step-direction" id="step-direction-horizontal" class="radio__button"
+                            value="horizontal">
+                        <label for="step-direction-horizontal" class="radio__label">Horizontal</label>
+                    </div>
+                </div>
+            </section>
+
             <div class="pt-xxsmall">
                 <button type="submit" class="button button--primary">Submit</button>
             </div>

@@ -1,6 +1,6 @@
 {
-  "name": "Knob Creator",
-  "id": "1030842037042371583",
+  "name": "Slider Creator",
+  "id": "1275561670400781749",
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/ui/index.html",
