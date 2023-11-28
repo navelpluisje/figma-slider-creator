@@ -29,8 +29,10 @@ export const createSlider = (
   };
   let capHeight = 0;
 
+  // Set the frame size to a size to fit all the new sliders
   frame.resizeWithoutConstraints((isVertical ? 1 : nbSteps) * width, (isVertical ? nbSteps : 1) * height);
 
+  // First we're getting some dimensions and positions of the different elements
   group.children.map((child) => {
     switch (getAction(child.name)) {
       case 'cap-range':
@@ -69,6 +71,7 @@ export const createSlider = (
   const stepSize = (capRange.length - capHeight) / (nbSteps - 1);
 
   for (let i = 0; i < nbSteps; i++) {
+    // First we create a clone of the slider and move it to the correct position
     const sliderGroup = group.clone();
     sliderGroup.name = `${frameName} ${i}`;
     sliderGroup.y = isVertical ? (i * height) : 0;
@@ -89,24 +92,24 @@ export const createSlider = (
           return child;
 
         case 'progress-center':
-          const progressStepSize = trackRange.length / (nbSteps - 1);
+          const progressCenterStepSize = trackRange.length / (nbSteps - 1);
           const maxLength = trackRange.length / 2;
           let startPos = 0;
           let progress = maxLength;
           if (isLtrOrTtb(slideDirection)) {
             if (nbSteps / i >= 2) {
-              startPos = i * progressStepSize;
+              startPos = i * progressCenterStepSize;
               progress = maxLength - startPos;
             } else {
               startPos = maxLength;
-              progress = i * progressStepSize - maxLength;
+              progress = i * progressCenterStepSize - maxLength;
             }
           } else {
             if (nbSteps / i >= 2) {
               startPos = maxLength;
-              progress = i * progressStepSize - maxLength;
+              progress = i * progressCenterStepSize - maxLength;
             } else {
-              startPos = trackRange.length - i * progressStepSize;
+              startPos = trackRange.length - i * progressCenterStepSize;
               progress = maxLength - startPos;
             }
           }
@@ -121,12 +124,14 @@ export const createSlider = (
           return child;
 
         case 'progress':
-          const trackProgress = trackRange.length - (trackRange.length / (nbSteps - 1)) * currentStep;
+          const progressStepSize = trackRange.length - (trackRange.length / (nbSteps - 1)) * (nbSteps - currentStep - 1);
+
           if (sliderDirection === 'vertical') {
-            (child as ComponentNode).resize(child.width, Math.max(trackProgress, 0.01));
-            child.y = groupY + trackRange.length - trackProgress + trackRange.start;
+            (child as ComponentNode).resize(child.width, Math.max(progressStepSize, 0.01));
+            child.y = groupY + trackRange.length - progressStepSize + trackRange.start;
           } else {
-            (child as ComponentNode).resize(Math.max(trackProgress, 0.01), child.height);
+            console.log({ trackRange });
+            (child as ComponentNode).resize(Math.max(progressStepSize, 0.01), child.height);
             child.x = groupX + trackRange.start;
           }
           return child;
