@@ -124,14 +124,13 @@ export const createSlider = (
           return child;
 
         case 'progress':
-          const progressStepSize = trackRange.length - (trackRange.length / (nbSteps - 1)) * (nbSteps - currentStep - 1);
+          let  progressStepSize = (trackRange.length / (nbSteps - 1)) * (nbSteps - currentStep - 1);
 
           if (sliderDirection === 'vertical') {
             (child as ComponentNode).resize(child.width, Math.max(progressStepSize, 0.01));
             child.y = groupY + trackRange.length - progressStepSize + trackRange.start;
           } else {
-            console.log({ trackRange });
-            (child as ComponentNode).resize(Math.max(progressStepSize, 0.01), child.height);
+            (child as ComponentNode).resize(Math.max(trackRange.length - progressStepSize, 0.01), child.height);
             child.x = groupX + trackRange.start;
           }
           return child;
